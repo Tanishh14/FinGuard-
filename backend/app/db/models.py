@@ -232,4 +232,4 @@ class SystemMetrics(Base):
     disk_usage = Column(Float)
     ml_model_latency = Column(Float)
     
-    metadata = Column(JSON)
+    extra_metadata = Column(JSON)

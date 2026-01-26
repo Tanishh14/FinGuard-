@@ -1,0 +1,27 @@
+2026-01-26 15:08:23.521 | INFO     | app.utils.logging:setup_logging:62 - Logging configured with level: INFO
+2026-01-26 15:08:23.532 | INFO     | main:lifespan:28 - 🚀 Starting FinGuard AI Backend
+2026-01-26 15:08:23.532 | INFO     | main:lifespan:29 - Environment: development
+2026-01-26 15:08:23.533 | INFO     | main:lifespan:30 - Database URL: postgresql+asyncpg:/...
+2026-01-26 15:08:23.536 | ERROR    | main:lifespan:38 - ❌ Database connection failed: [Errno 111] Connection refused
+2026-01-26 15:11:43.174 | INFO     | app.utils.logging:setup_logging:62 - Logging configured with level: INFO
+2026-01-26 15:11:43.185 | INFO     | main:lifespan:28 - 🚀 Starting FinGuard AI Backend
+2026-01-26 15:11:43.185 | INFO     | main:lifespan:29 - Environment: development
+2026-01-26 15:11:43.185 | INFO     | main:lifespan:30 - Database URL: postgresql+asyncpg:/...
+2026-01-26 15:11:43.233 | INFO     | main:lifespan:36 - ✅ Database tables created/verified
+2026-01-26 15:11:43.234 | INFO     | app.services.ingestion:initialize_fraud_patterns:429 - Initializing fraud patterns database...
+2026-01-26 15:11:43.234 | INFO     | main:lifespan:44 - ✅ Fraud patterns initialized
+2026-01-26 15:11:48.580 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-26 15:11:48.757 | WARNING  | app.utils.logging:log_request:120 - Client error
+2026-01-26 15:13:22.281 | INFO     | main:lifespan:51 - 🛑 Shutting down FinGuard AI Backend
+2026-01-26 15:13:40.253 | INFO     | app.utils.logging:setup_logging:62 - Logging configured with level: INFO
+2026-01-26 15:13:40.264 | INFO     | main:lifespan:28 - 🚀 Starting FinGuard AI Backend
+2026-01-26 15:13:40.265 | INFO     | main:lifespan:29 - Environment: development
+2026-01-26 15:13:40.265 | INFO     | main:lifespan:30 - Database URL: postgresql+asyncpg:/...
+2026-01-26 15:13:40.310 | INFO     | main:lifespan:36 - ✅ Database tables created/verified
+2026-01-26 15:13:40.310 | INFO     | app.services.ingestion:initialize_fraud_patterns:429 - Initializing fraud patterns database...
+2026-01-26 15:13:40.310 | INFO     | main:lifespan:44 - ✅ Fraud patterns initialized
+2026-01-26 15:13:49.419 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-26 15:16:14.050 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-26 15:18:28.694 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-26 15:18:42.060 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-26 15:19:46.287 | INFO     | main:lifespan:51 - 🛑 Shutting down FinGuard AI Backend
