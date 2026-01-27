@@ -1,0 +1,17 @@
+# Datasets
+data/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Trained models & scalers
+ml/models/*.pt
+ml/models/*.pkl
+
+# Ignore data, models, cache
+data/
+__pycache__/
+ml/models/*.pt
+ml/models/*.pkl
+*.pyc
