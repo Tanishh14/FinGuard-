@@ -15,3 +15,7 @@ __pycache__/
 ml/models/*.pt
 ml/models/*.pkl
 *.pyc
+
+# Ignore trained ML models
+ml/models/*.pkl
+ml/models/*.pt
