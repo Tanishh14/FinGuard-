@@ -113,19 +113,18 @@ services:
       - finguard-network
     restart: unless-stopped
 
-  # Frontend
+  # Frontend (folder: frontend_file/frontend)
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend_file/frontend
       dockerfile: Dockerfile
     container_name: finguard-frontend
     ports:
       - "3000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
-      - NEXT_PUBLIC_ML_URL=http://localhost:8001
     volumes:
-      - ./frontend:/app
+      - ./frontend_file/frontend:/app
       - /app/node_modules
       - /app/.next
     depends_on:

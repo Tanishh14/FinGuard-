@@ -42,16 +42,17 @@ class MLClient:
                 if response.status_code == 200:
                     result = response.json()
                     return result
-                else:
-                    logger.error(f"ML service error: {response.status_code} - {response.text}")
-                    return self._get_default_prediction()
+                logger.error(f"ML service error: {response.status_code} - {response.text}")
+                response.raise_for_status()
                     
-        except httpx.TimeoutException:
+        except httpx.TimeoutException as e:
             logger.error("ML service timeout")
-            return self._get_default_prediction()
+            raise RuntimeError("ML service timeout") from e
+        except httpx.HTTPStatusError as e:
+            raise
         except Exception as e:
             logger.error(f"ML service communication failed: {e}")
-            return self._get_default_prediction()
+            raise RuntimeError(f"ML service unavailable: {e}") from e
     
     async def get_model_info(self) -> Dict[str, Any]:
         """Get information about loaded ML models"""
@@ -93,16 +94,3 @@ class MLClient:
                 return response.status_code == 200
         except Exception:
             return False
-    
-    def _get_default_prediction(self) -> Dict[str, Any]:
-        """Return default prediction when ML service fails"""
-        return {
-            "anomaly_score": 0.0,
-            "graph_risk_score": 0.0,
-            "combined_risk_score": 0.0,
-            "risk_level": "low",
-            "features_used": [],
-            "model_confidence": 0.5,
-            "fraud_type_prediction": None,
-            "error": "ML service unavailable, using default prediction"
-        }

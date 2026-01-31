@@ -217,14 +217,107 @@ class TestExplanationEndpoints:
             assert "sources" in data
 
 
+class TestAuthLogin:
+    """Test auth/login endpoint - API contract"""
+
+    def test_login_demo(self, client):
+        """Demo user returns JWT."""
+        response = client.post(
+            "/api/v1/auth/login",
+            json={"username": "demo", "password": "demo"},
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert "access_token" in data
+        assert data.get("token_type") == "bearer"
+        assert "expires_in_minutes" in data
+
+    def test_login_invalid(self, client):
+        """Invalid credentials return 401."""
+        response = client.post(
+            "/api/v1/auth/login",
+            json={"username": "bad", "password": "bad"},
+        )
+        assert response.status_code == 401
+
+
+class TestPredictFraud:
+    """Integration: backend -> ML call (mocked). API contract for predict/fraud."""
+
+    @patch("app.services.ml_client.MLClient.predict")
+    @patch("app.services.explain_client.ExplainClient.generate_explanation")
+    def test_predict_fraud_returns_contract_response(
+        self, mock_explain, mock_ml, client, mock_ml_response, mock_explanation_response
+    ):
+        mock_ml.return_value = mock_ml_response
+        mock_explain.return_value = mock_explanation_response
+        payload = {
+            "transaction_id": "test_txn_123",
+            "user_id": "00000000-0000-0000-0000-000000000001",
+            "amount": 150.0,
+            "timestamp": "2025-01-30T12:00:00Z",
+            "merchant": "test_merchant_456",
+            "device_id": "dev_789",
+            "ip_address": "127.0.0.1",
+        }
+        with patch("app.core.dependencies.get_current_active_user") as mock_user:
+            mock_user.return_value = type("User", (), {"id": "00000000-0000-0000-0000-000000000001", "is_active": True})()
+            response = client.post(
+                "/api/v1/predict/fraud",
+                json=payload,
+                headers={"Authorization": "Bearer test_token"},
+            )
+        assert response.status_code == 200
+        data = response.json()
+        assert "transaction_id" in data
+        assert "fraud_score" in data
+        assert "risk_label" in data
+        assert data["risk_label"] in ("LOW", "MEDIUM", "HIGH")
+        assert "model_scores" in data
+        assert "autoencoder" in data["model_scores"]
+        assert "isolation_forest" in data["model_scores"]
+        assert "gnn" in data["model_scores"]
+        mock_ml.assert_called_once()
+
+
+class TestExplainByTransactionId:
+    """Integration: backend -> explainability (GET /explain/{transaction_id})."""
+
+    def test_get_explain_unauthorized(self, client):
+        response = client.get("/api/v1/explain/txn_123")
+        assert response.status_code == 401
+
+    @patch("app.core.dependencies.get_current_active_user")
+    def test_get_explain_not_found(self, mock_user, client):
+        mock_user.return_value = type("User", (), {"id": "00000000-0000-0000-0000-000000000001", "is_active": True})()
+        response = client.get(
+            "/api/v1/explain/nonexistent_txn",
+            headers={"Authorization": "Bearer test_token"},
+        )
+        assert response.status_code == 404
+
+
 class TestAuthentication:
     """Test authentication and authorization"""
-    
+
     def test_unauthenticated_access(self, client):
         """Test access without authentication"""
         response = client.post("/api/v1/transactions/analyze", json={})
         assert response.status_code == 401  # Unauthorized
-    
+
+    def test_unauthenticated_predict_fraud(self, client):
+        response = client.post(
+            "/api/v1/predict/fraud",
+            json={
+                "transaction_id": "t",
+                "user_id": "u",
+                "amount": 1,
+                "timestamp": "2025-01-30T12:00:00Z",
+                "merchant": "m",
+            },
+        )
+        assert response.status_code == 401
+
     def test_invalid_token(self, client):
         """Test access with invalid token"""
         response = client.post(

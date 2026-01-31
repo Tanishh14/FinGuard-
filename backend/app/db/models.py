@@ -2,7 +2,7 @@
 SQLAlchemy models for FinGuard AI
 """
 
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Optional, List
 from sqlalchemy import (
     Column, String, Integer, Float, Boolean, DateTime, 
@@ -11,6 +11,10 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
+
+def utcnow():
+    """Return timezone-naive UTC datetime for PostgreSQL."""
+    return datetime.utcnow()
 
 Base = declarative_base()
 
@@ -25,9 +29,8 @@ class User(Base):
     hashed_password = Column(String(255))
     is_active = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), 
-                       onupdate=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
+    updated_at = Column(DateTime, default=utcnow, onupdate=utcnow)
     
     transactions = relationship("Transaction", back_populates="user")
 
@@ -69,7 +72,7 @@ class Transaction(Base):
     
     # Timestamps
     transaction_time = Column(DateTime, nullable=False, index=True)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
     processed_at = Column(DateTime)
     
     # Relationships
@@ -104,7 +107,7 @@ class Explanation(Base):
     completion_tokens = Column(Integer)
     total_tokens = Column(Integer)
     
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
     
     # Relationships
     transaction = relationship("Transaction", back_populates="explanations")
@@ -132,7 +135,7 @@ class Alert(Base):
     notification_method = Column(String(50))  # email, telegram, sms, push
     notification_time = Column(DateTime)
     
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
     
     # Relationships
     transaction = relationship("Transaction", back_populates="alerts")
@@ -155,9 +158,8 @@ class Merchant(Base):
     connected_users = Column(JSON)  # List of user IDs
     suspicious_patterns = Column(JSON)  # Detected patterns
     
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), 
-                       onupdate=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
+    updated_at = Column(DateTime, default=utcnow, onupdate=utcnow)
 
 
 class Device(Base):
@@ -180,9 +182,8 @@ class Device(Base):
     ip_addresses = Column(JSON)  # List of IPs used
     locations = Column(JSON)  # List of locations
     
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), 
-                       onupdate=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
+    updated_at = Column(DateTime, default=utcnow, onupdate=utcnow)
 
 
 class FraudPattern(Base):
@@ -202,9 +203,8 @@ class FraudPattern(Base):
     accuracy = Column(Float)
     
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), 
-                       onupdate=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utcnow)
+    updated_at = Column(DateTime, default=utcnow, onupdate=utcnow)
 
 
 class SystemMetrics(Base):
@@ -212,7 +212,7 @@ class SystemMetrics(Base):
     __tablename__ = "system_metrics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc), index=True)
+    timestamp = Column(DateTime, default=utcnow, index=True)
     
     # Performance metrics
     request_count = Column(Integer, default=0)

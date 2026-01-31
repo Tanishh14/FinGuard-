@@ -1,1 +1,29 @@
 2026-01-26 15:08:23.536 | ERROR    | main:lifespan:38 - ❌ Database connection failed: [Errno 111] Connection refused
+2026-01-30 14:16:06.414 | ERROR    | main:lifespan:38 - ❌ Database connection failed: password authentication failed for user "finguard"
+2026-01-30 21:17:06.214 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.219 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.231 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.244 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.247 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.258 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.375 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.395 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:06.405 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:16.085 | ERROR    | app.services.ml_client:predict:54 - ML service communication failed: All connection attempts failed
+2026-01-30 21:17:16.086 | ERROR    | app.services.scoring_orchestrator:process_transaction:99 - Error in transaction processing: ML service unavailable: All connection attempts failed
+2026-01-30 21:17:16.087 | ERROR    | app.api.v1.endpoints.predict:predict_fraud:60 - ML or explanation service failed: ML service unavailable: All connection attempts failed
+2026-01-30 21:17:16.089 | ERROR    | app.utils.logging:log_request:118 - Server error
+2026-01-30 21:17:58.285 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.293 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.314 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.326 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.333 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.337 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.353 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:17:58.357 | ERROR    | app.main:catch_exceptions_middleware:86 - Unhandled exception: %s
+2026-01-30 21:19:40.253 | ERROR    | app.services.ml_client:predict:54 - ML service communication failed: All connection attempts failed
+2026-01-30 21:19:40.254 | ERROR    | app.services.scoring_orchestrator:process_transaction:99 - Error in transaction processing: ML service unavailable: All connection attempts failed
+2026-01-30 21:19:40.255 | ERROR    | app.api.v1.endpoints.predict:predict_fraud:60 - ML or explanation service failed: ML service unavailable: All connection attempts failed
+2026-01-30 21:19:40.257 | ERROR    | app.utils.logging:log_request:118 - Server error
+2026-01-31 08:10:01.557 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:10:34.210 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed

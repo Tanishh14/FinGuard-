@@ -8,7 +8,7 @@ from functools import lru_cache
 import secrets
 
 from pydantic_settings import BaseSettings
-from pydantic import AnyHttpUrl, PostgresDsn, field_validator
+from pydantic import AnyHttpUrl, field_validator, model_validator
 
 
 class Settings(BaseSettings):
@@ -57,20 +57,6 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int = 5432
     DATABASE_URL: Optional[str] = None
 
-    @field_validator("DATABASE_URL", mode="before")
-    def assemble_db_connection(cls, v, values):
-        if isinstance(v, str):
-            return v
-
-        return str(PostgresDsn.build(
-            scheme="postgresql+asyncpg",
-            username=values.data.get("POSTGRES_USER"),
-            password=values.data.get("POSTGRES_PASSWORD"),
-            host=values.data.get("POSTGRES_SERVER"),
-            port=values.data.get("POSTGRES_PORT"),
-            path=f"{values.data.get('POSTGRES_DB')}",
-        ))
-
     # =========================
     # Redis
     # =========================
@@ -80,14 +66,17 @@ class Settings(BaseSettings):
     REDIS_PASSWORD: Optional[str] = None
     REDIS_URL: Optional[str] = None
 
-    @field_validator("REDIS_URL", mode="before")
-    def assemble_redis_connection(cls, v, values):
-        if isinstance(v, str):
-            return v
-
-        password = values.data.get("REDIS_PASSWORD")
-        auth = f"{password}@" if password else ""
-        return f"redis://{auth}{values.data.get('REDIS_HOST')}:{values.data.get('REDIS_PORT')}/{values.data.get('REDIS_DB')}"
+    @model_validator(mode="after")
+    def assemble_db_and_redis_urls(self):
+        if not self.DATABASE_URL:
+            from urllib.parse import quote_plus
+            user = quote_plus(self.POSTGRES_USER)
+            password = quote_plus(self.POSTGRES_PASSWORD)
+            self.DATABASE_URL = f"postgresql+asyncpg://{user}:{password}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        if not self.REDIS_URL:
+            auth = f"{self.REDIS_PASSWORD}@" if self.REDIS_PASSWORD else ""
+            self.REDIS_URL = f"redis://{auth}{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
+        return self
 
     # =========================
     # ML Service

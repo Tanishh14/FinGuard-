@@ -4,7 +4,10 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from pathlib import Path
 
-from explainability.llm_explainer import LLMExplainer
+try:
+    from explainability.llm_explainer import LLMExplainer
+except ImportError:
+    from llm_explainer import LLMExplainer
 
 BASE_DIR = Path(__file__).parent
 VECTOR_STORE_PATH = BASE_DIR / "vector_store" / "index.faiss"

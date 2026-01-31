@@ -69,16 +69,12 @@ class ScoringOrchestrator:
                         "risk_level": risk_level,
                         "is_fraudulent": is_fraudulent
                     }
-                    
                     explanation = await self.explain_client.generate_explanation(
                         transaction_data=explanation_data
                     )
                 except Exception as e:
                     logger.warning(f"Failed to generate explanation: {e}")
-                    # Create a basic explanation
-                    explanation = self._create_basic_explanation(
-                        risk_score, risk_level, ml_results
-                    )
+                    explanation = None
             
             # Step 5: Prepare response
             response = {
@@ -101,8 +97,7 @@ class ScoringOrchestrator:
             
         except Exception as e:
             logger.error(f"Error in transaction processing: {e}")
-            # Return a safe default response
-            return self._create_error_response(transaction_data, str(e))
+            raise
     
     async def process_batch_transactions(self, transactions: list, user_id: str) -> Dict[str, Any]:
         """Process multiple transactions in batch"""
@@ -136,38 +131,23 @@ class ScoringOrchestrator:
         }
     
     def _calculate_combined_risk_score(self, ml_results: Dict[str, Any]) -> float:
-        """Calculate combined risk score from ML model outputs"""
+        """
+        Combined fraud risk score 0-100 from ML outputs.
+        anomaly_score and graph_risk_score must be in [0, 1]; no artificial limits.
+        Formula: (0.4 * anomaly_score + 0.6 * gnn_score) * 100, clamped to 0-100.
+        """
         try:
-            # Weights for different model scores
-            weights = {
-                "anomaly_score": 0.4,
-                "graph_risk_score": 0.4,
-                "model_confidence": 0.2
-            }
-            
-            anomaly_score = ml_results.get("anomaly_score", 0.0)
-            graph_score = ml_results.get("graph_risk_score", 0.0)
-            confidence = ml_results.get("model_confidence", 0.5)
-            
-            # Invert confidence (lower confidence = higher risk)
-            confidence_risk = 1.0 - confidence
-            
-            # Weighted sum
-            weighted_sum = (
-                anomaly_score * weights["anomaly_score"] +
-                graph_score * weights["graph_risk_score"] +
-                confidence_risk * weights["model_confidence"]
-            )
-            
-            # Scale to 0-100
-            risk_score = weighted_sum * 100
-            
-            # Apply sigmoid-like transformation for better distribution
-            import math
-            risk_score = 100 / (1 + math.exp(-0.1 * (risk_score - 50)))
-            
+            # Treat model outputs as 0-1; clamp if ML returns out of range
+            raw_anomaly = float(ml_results.get("anomaly_score", 0.0))
+            raw_gnn = float(ml_results.get("graph_risk_score", 0.0))
+            anomaly_score = max(0.0, min(1.0, raw_anomaly))
+            gnn_score = max(0.0, min(1.0, raw_gnn))
+
+            # Weighted combination: 40% anomaly, 60% GNN
+            combined = 0.4 * anomaly_score + 0.6 * gnn_score
+            risk_score = combined * 100.0
+            risk_score = max(0.0, min(100.0, risk_score))
             return round(risk_score, 2)
-            
         except Exception as e:
             logger.error(f"Error calculating risk score: {e}")
             return 0.0
@@ -182,40 +162,6 @@ class ScoringOrchestrator:
             return "low"
         else:
             return "low"
-    
-    def _create_basic_explanation(self, risk_score: float, risk_level: str, ml_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a basic explanation when LLM fails"""
-        reasons = []
-        
-        anomaly_score = ml_results.get("anomaly_score", 0.0)
-        if anomaly_score > 0.7:
-            reasons.append({
-                "reason": "High anomaly detection score indicates unusual behavior",
-                "severity": "high",
-                "impact_score": 0.7
-            })
-        
-        graph_score = ml_results.get("graph_risk_score", 0.0)
-        if graph_score > 0.6:
-            reasons.append({
-                "reason": "Suspicious connections detected in transaction network",
-                "severity": "medium",
-                "impact_score": 0.5
-            })
-        
-        return {
-            "summary": f"Transaction flagged as {risk_level} risk with score {risk_score:.1f}",
-            "reasons": reasons,
-            "suggested_actions": [
-                {
-                    "action": "Review transaction details",
-                    "priority": risk_level,
-                    "description": "Manually verify transaction authenticity"
-                }
-            ],
-            "confidence": 0.6,
-            "model_used": "rule_based"
-        }
     
     def _calculate_batch_stats(self, results: list) -> Dict[str, Any]:
         """Calculate statistics for batch processing"""

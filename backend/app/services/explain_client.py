@@ -46,16 +46,17 @@ class ExplainClient:
                 if response.status_code == 200:
                     result = response.json()
                     return result
-                else:
-                    logger.error(f"Explanation service error: {response.status_code} - {response.text}")
-                    return self._get_default_explanation(transaction_data)
+                logger.error(f"Explanation service error: {response.status_code} - {response.text}")
+                response.raise_for_status()
                     
-        except httpx.TimeoutException:
+        except httpx.TimeoutException as e:
             logger.error("Explanation service timeout")
-            return self._get_default_explanation(transaction_data)
+            raise RuntimeError("Explanation service timeout") from e
+        except httpx.HTTPStatusError as e:
+            raise
         except Exception as e:
             logger.error(f"Explanation service communication failed: {e}")
-            return self._get_default_explanation(transaction_data)
+            raise RuntimeError(f"Explanation service unavailable: {e}") from e
     
     async def get_fraud_patterns(self, pattern_type: str = "all", limit: int = 10) -> List[Dict[str, Any]]:
         """Get known fraud patterns from RAG system"""
@@ -73,12 +74,13 @@ class ExplainClient:
                 
                 if response.status_code == 200:
                     return response.json()
-                else:
-                    return []
-                    
+                logger.error(f"Patterns service error: {response.status_code} - {response.text}")
+                response.raise_for_status()
+        except httpx.HTTPStatusError:
+            raise
         except Exception as e:
             logger.error(f"Failed to get fraud patterns: {e}")
-            return []
+            raise RuntimeError(f"Explanation service unavailable: {e}") from e
     
     async def query_fraud_knowledge(self, question: str, user_id: Optional[str] = None) -> Dict[str, Any]:
         """Query fraud knowledge base using RAG"""
@@ -95,14 +97,13 @@ class ExplainClient:
                     headers={"Content-Type": "application/json"}
                 )
                 
-                if response.status_code == 200:
-                    return response.json()
-                else:
-                    return {"answer": "Unable to retrieve answer at this time.", "sources": []}
-                    
+                response.raise_for_status()
+                return response.json()
+        except httpx.HTTPStatusError:
+            raise
         except Exception as e:
             logger.error(f"Failed to query knowledge base: {e}")
-            return {"answer": "Service temporarily unavailable.", "sources": []}
+            raise RuntimeError(f"Explanation service unavailable: {e}") from e
     
     async def health_check(self) -> bool:
         """Check if explanation service is healthy"""
@@ -112,31 +113,3 @@ class ExplainClient:
                 return response.status_code == 200
         except Exception:
             return False
-    
-    def _get_default_explanation(self, transaction_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Return default explanation when service fails"""
-        risk_score = transaction_data.get("risk_score", 0)
-        risk_level = transaction_data.get("risk_level", "low")
-        
-        return {
-            "summary": f"Transaction analyzed with risk score {risk_score:.1f} ({risk_level} risk).",
-            "reasons": [
-                {
-                    "reason": "Automated analysis completed",
-                    "severity": "low",
-                    "impact_score": 0.3
-                }
-            ],
-            "suggested_actions": [
-                {
-                    "action": "Monitor transaction",
-                    "priority": "low",
-                    "description": "Keep transaction under observation"
-                }
-            ],
-            "confidence": 0.5,
-            "model_used": "default",
-            "prompt_tokens": 0,
-            "completion_tokens": 0,
-            "total_tokens": 0
-        }

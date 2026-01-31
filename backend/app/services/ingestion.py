@@ -64,7 +64,7 @@ class FeatureExtractor:
             
         except Exception as e:
             logger.error(f"Feature extraction failed: {e}")
-            # Return minimal feature set
+            await self.db.rollback()
             return self._extract_basic_features(transaction_data)
     
     def _extract_basic_features(self, transaction_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -157,7 +157,7 @@ class FeatureExtractor:
             
         except Exception as e:
             logger.warning(f"Behavioral feature extraction failed: {e}")
-            # Set default values
+            await self.db.rollback()
             features.update({
                 "user_transaction_count": 0,
                 "user_avg_amount": 0.0,
@@ -165,7 +165,6 @@ class FeatureExtractor:
                 "user_frequency_days": 0.0,
                 "is_new_user": 1,
             })
-        
         return features
     
     async def _extract_merchant_features(self, merchant_id: Optional[str]) -> Dict[str, Any]:
@@ -211,6 +210,7 @@ class FeatureExtractor:
                 
         except Exception as e:
             logger.warning(f"Merchant feature extraction failed: {e}")
+            await self.db.rollback()
             features.update({
                 "merchant_risk_score": 0.5,
                 "merchant_transaction_count": 0,
@@ -264,6 +264,7 @@ class FeatureExtractor:
                 
         except Exception as e:
             logger.warning(f"Device feature extraction failed: {e}")
+            await self.db.rollback()
             features.update({
                 "device_risk_score": 0.5,
                 "device_transaction_count": 0,
@@ -347,6 +348,7 @@ class FeatureExtractor:
             
         except Exception as e:
             logger.warning(f"Graph feature extraction failed: {e}")
+            await self.db.rollback()
             features.update({
                 "shared_device_count": 0,
                 "merchant_activity_24h": 0,

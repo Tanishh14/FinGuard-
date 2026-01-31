@@ -26,6 +26,32 @@ class TransactionType(str, Enum):
 
 
 # Request Schemas
+class PredictFraudRequest(BaseModel):
+    """API contract: POST /predict/fraud request body"""
+    transaction_id: str = Field(..., description="Unique transaction identifier")
+    user_id: str = Field(..., description="User identifier")
+    amount: float = Field(..., gt=0, description="Transaction amount")
+    timestamp: str = Field(..., description="ISO-8601 timestamp")
+    merchant: str = Field(..., description="Merchant identifier")
+    device_id: str = Field(default="", description="Device fingerprint")
+    ip_address: str = Field(default="", description="Client IP address")
+
+
+class ModelScores(BaseModel):
+    """Model-wise scores in API response"""
+    autoencoder: float = Field(..., ge=0, le=1)
+    isolation_forest: float = Field(..., ge=0, le=1)
+    gnn: float = Field(..., ge=0, le=1)
+
+
+class PredictFraudResponse(BaseModel):
+    """API contract: POST /predict/fraud response body"""
+    transaction_id: str
+    fraud_score: float = Field(..., ge=0, le=1, description="Combined fraud score 0-1")
+    risk_label: str = Field(..., description="LOW | MEDIUM | HIGH")
+    model_scores: ModelScores
+
+
 class TransactionCreate(BaseModel):
     """Schema for creating/analyzing a new transaction"""
     transaction_id: str = Field(..., description="Unique transaction identifier")
