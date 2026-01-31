@@ -15,6 +15,8 @@ export default function LiveTransactionsPage() {
   useEffect(() => {
     let cancelled = false;
     let isFirst = true;
+    let es: EventSource | null = null;
+
     async function load() {
       if (isFirst) {
         setLoading(true);
@@ -30,11 +32,42 @@ export default function LiveTransactionsPage() {
         if (!cancelled) setLoading(false);
       }
     }
+
     load();
-    const interval = setInterval(load, POLL_INTERVAL_MS);
+
+    // Real-time via Server-Sent Events
+    try {
+      es = new EventSource('/api/v1/stream');
+      es.onmessage = (ev) => {
+        try {
+          const data = JSON.parse(ev.data);
+          if (data?.type === 'transaction') {
+            setTransactions((prev) => {
+              if (!prev) return [data as any];
+              // Prepend new transaction and keep unique by transaction_id
+              const dedup = [data as any, ...prev.filter((t) => t.transaction_id !== data.transaction_id)];
+              return dedup.slice(0, 100);
+            });
+          }
+        } catch (err) {
+          // ignore parse errors
+        }
+      };
+      es.onerror = () => {
+        // Attempt to reconnect by closing and letting browser reconnect
+        if (es) es.close();
+        setTimeout(() => {
+          // trigger reload attempt
+          setRetryCount((c) => c + 1);
+        }, 2000);
+      };
+    } catch (err) {
+      // If SSE is not supported, fallback to polling (already running)
+    }
+
     return () => {
       cancelled = true;
-      clearInterval(interval);
+      if (es) es.close();
     };
   }, [retryCount]);
 
@@ -66,6 +99,7 @@ export default function LiveTransactionsPage() {
 
   if (error) {
     const isUnreachable = error.includes('Backend unreachable') || error.includes('unavailable');
+    const isAuthError = error.includes('Authentication required') || error.toLowerCase().includes('auth') || error.toLowerCase().includes('login');
     const backendUrl =
       (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_API_URL) || 'http://localhost:8000';
     const healthUrl = `${backendUrl.replace(/\/$/, '')}/health`;
@@ -95,6 +129,21 @@ export default function LiveTransactionsPage() {
                 {' '}(if it loads, backend is up and the issue may be proxy or login)
               </p>
             </>
+          ) : isAuthError ? (
+            <>
+              <p className="text-sm text-gray-700 mt-3 font-medium">Authentication required</p>
+              <p className="text-sm text-gray-600 mt-2">This page requires a logged-in user. Please sign in with the demo account to view live transactions.</p>
+              <div className="mt-3 flex space-x-2">
+                <Link href="/login" className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">Open login</Link>
+                <button
+                  type="button"
+                  onClick={() => { localStorage.removeItem('finguard_token'); window.location.href = '/login'; }}
+                  className="px-3 py-2 bg-gray-100 text-gray-800 rounded-lg text-sm"
+                >
+                  Clear token & go
+                </button>
+              </div>
+            </>
           ) : (
             <p className="text-sm text-gray-600 mt-2">No mock data. Ensure backend is running and you are logged in.</p>
           )}
@@ -113,11 +162,11 @@ export default function LiveTransactionsPage() {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <div className="flex items-center space-x-2 mb-2">
-          <span className="text-2xl">⚡</span>
+        <div className="flex items-center justify-between mb-2">
           <h1 className="text-3xl font-bold text-gray-800">Live Transaction Monitoring</h1>
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-green-800 text-sm font-medium">LIVE</span>
         </div>
-        <p className="text-gray-600">Data from backend API. No mock data.</p>
+        <p className="text-gray-600">Real-time transactions from the backend. No mock data.</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">

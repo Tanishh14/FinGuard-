@@ -110,9 +110,40 @@ async def predict_fraud(
                     )
                 )
             await persist_session.commit()
+            # Publish event for real-time clients
+            try:
+                from app.services.broadcaster import publish
+                publish({
+                    "type": "transaction",
+                    "transaction_id": db_txn.transaction_id,
+                    "risk_score": float(db_txn.risk_score),
+                    "risk_level": db_txn.risk_level,
+                    "merchant_id": db_txn.merchant_id,
+                    "amount": float(db_txn.amount),
+                    "currency": db_txn.currency,
+                    "is_fraudulent": bool(db_txn.is_fraudulent),
+                    "transaction_time": str(db_txn.processed_at or db_txn.created_at),
+                })
+            except Exception:
+                logger.warning("Failed to publish transaction event to subscribers")
     except Exception as e:
         logger.warning(f"Failed to store transaction after predict: {e}")
         # Still return the prediction
+        try:
+            from app.services.broadcaster import publish
+            publish({
+                "type": "transaction",
+                "transaction_id": result.get("transaction_id"),
+                "risk_score": float(risk_score),
+                "risk_level": risk_level,
+                "merchant_id": body.merchant,
+                "amount": float(body.amount),
+                "currency": "USD",
+                "is_fraudulent": bool(result.get("is_fraudulent", False)),
+                "transaction_time": str(datetime.now()),
+            })
+        except Exception:
+            logger.warning("Failed to publish transaction event to subscribers")
 
     return PredictFraudResponse(
         transaction_id=body.transaction_id,

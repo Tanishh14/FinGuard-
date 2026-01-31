@@ -29,3 +29,6 @@ End-to-end fraud detection and risk intelligence: frontend sends transaction/use
 ## Docker topology
 
 backend (8000), ml-service (8001), explain-service (8002), frontend (3000) on finguard-network. Frontend build: ./frontend_file/frontend. NEXT_PUBLIC_API_URL points to backend.
+
+Real-time updates: The backend exposes a Server-Sent Events endpoint `/api/v1/stream` which broadcasts new transactions and alerts to connected clients. Use SSE in the frontend to receive live updates without polling.
+

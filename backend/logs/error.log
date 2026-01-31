@@ -27,3 +27,8 @@
 2026-01-30 21:19:40.257 | ERROR    | app.utils.logging:log_request:118 - Server error
 2026-01-31 08:10:01.557 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
 2026-01-31 08:10:34.210 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:40:19.846 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:41:14.591 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:46:56.846 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:47:10.277 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:47:16.190 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed

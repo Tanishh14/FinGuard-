@@ -1261,3 +1261,222 @@ DETAIL:  Key (user_id)=(00000000-0000-0000-0000-000000000001) is not present in 
 2026-01-31 08:16:27.897 | INFO     | app.utils.logging:log_request:122 - Request processed
 2026-01-31 08:16:32.636 | INFO     | app.utils.logging:log_request:122 - Request processed
 2026-01-31 08:16:42.835 | INFO     | app.main:lifespan:78 - Shutting down FinGuard AI Backend
+2026-01-31 08:33:51.948 | INFO     | app.utils.logging:setup_logging:62 - Logging configured with level: INFO
+2026-01-31 08:33:51.968 | INFO     | app.main:lifespan:27 - Starting FinGuard AI Backend
+2026-01-31 08:33:51.968 | INFO     | app.main:lifespan:28 - Environment: %s
+2026-01-31 08:33:52.012 | INFO     | app.main:lifespan:33 - Database connectivity verified
+2026-01-31 08:33:52.015 | INFO     | app.main:lifespan:45 - Tables already exist
+2026-01-31 08:33:52.016 | INFO     | app.services.ingestion:initialize_fraud_patterns:431 - Initializing fraud patterns database...
+2026-01-31 08:33:52.016 | INFO     | app.main:lifespan:72 - Fraud patterns initialized
+2026-01-31 08:34:05.845 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:05.863 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:05.866 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:05.868 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:05.981 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:05.990 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:05.999 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:06.002 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:10.796 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:10.804 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:10.827 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:10.837 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:10.853 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:10.855 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:10.862 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:10.872 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:14.948 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:14.954 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:14.986 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:14.990 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:17.159 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:17.171 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:17.204 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:34:17.209 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:20.438 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:20.440 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:20.463 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:25.859 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:34:25.860 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:05.925 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:35:05.926 | INFO     | app.services.scoring_orchestrator:process_transaction:38 - Processing transaction for user 00000000-0000-0000-0000-000000000001
+2026-01-31 08:35:09.551 | INFO     | app.services.scoring_orchestrator:process_transaction:95 - Transaction processed: risk_score=10.12, level=low
+2026-01-31 08:35:09.561 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:16.293 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:35:16.297 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:16.332 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:35:16.336 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:18.098 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:35:18.104 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:18.130 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:35:18.133 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:20.628 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:20.633 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:20.654 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:56.482 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:56.495 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:35:56.508 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:36:07.428 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:36:07.436 | WARNING  | app.core.dependencies:get_current_user:38 - No credentials provided
+2026-01-31 08:36:07.437 | WARNING  | app.utils.logging:log_request:120 - Client error
+2026-01-31 08:37:07.813 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:07.848 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:07.850 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:07.853 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:07.857 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:07.864 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:07.886 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:07.902 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:12.773 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:12.790 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:12.822 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:12.848 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:12.852 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:37:12.859 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:12.868 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:37:12.874 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:38.522 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:38.524 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:38.525 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:38.527 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:38.537 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:38.539 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:38.542 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:38.559 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:46.415 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:46.428 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:46.433 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:46.437 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:46.453 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:46.465 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:46.478 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:46.510 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:51.808 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:51.813 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:51.821 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:51.837 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:51.842 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:51.850 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:51.858 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:51.865 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:56.808 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:56.810 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:56.813 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:56.815 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:38:56.826 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:56.826 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:56.835 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:38:56.841 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:01.778 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:01.783 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:01.796 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:01.815 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:01.822 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:01.827 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:01.835 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:01.844 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:06.796 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:06.802 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:06.823 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:06.825 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:06.911 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:39:06.914 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:06.926 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:06.930 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:20.025 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:35.513 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:48.311 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:39:58.539 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:19.718 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:40:19.718 | INFO     | app.services.scoring_orchestrator:process_transaction:38 - Processing transaction for user 00000000-0000-0000-0000-000000000001
+2026-01-31 08:40:19.846 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:40:19.847 | WARNING  | app.services.scoring_orchestrator:process_transaction:76 - Failed to generate explanation: Explanation service unavailable: All connection attempts failed
+2026-01-31 08:40:19.848 | INFO     | app.services.scoring_orchestrator:process_transaction:95 - Transaction processed: risk_score=52.8, level=medium
+2026-01-31 08:40:19.866 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:28.667 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:41.888 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:49.294 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:49.295 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:40:49.308 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:57.450 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:40:57.952 | WARNING  | app.utils.logging:log_request:120 - Client error
+2026-01-31 08:41:14.023 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:41:14.521 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:41:14.522 | INFO     | app.services.scoring_orchestrator:process_transaction:38 - Processing transaction for user 00000000-0000-0000-0000-000000000001
+2026-01-31 08:41:14.591 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:41:14.592 | WARNING  | app.services.scoring_orchestrator:process_transaction:76 - Failed to generate explanation: Explanation service unavailable: All connection attempts failed
+2026-01-31 08:41:14.592 | INFO     | app.services.scoring_orchestrator:process_transaction:95 - Transaction processed: risk_score=52.8, level=medium
+2026-01-31 08:41:14.599 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:45:21.686 | INFO     | app.utils.logging:setup_logging:62 - Logging configured with level: INFO
+2026-01-31 08:45:21.709 | INFO     | app.main:lifespan:27 - Starting FinGuard AI Backend
+2026-01-31 08:45:21.709 | INFO     | app.main:lifespan:28 - Environment: %s
+2026-01-31 08:45:21.752 | INFO     | app.main:lifespan:33 - Database connectivity verified
+2026-01-31 08:45:21.756 | INFO     | app.main:lifespan:45 - Tables already exist
+2026-01-31 08:45:21.757 | INFO     | app.services.ingestion:initialize_fraud_patterns:431 - Initializing fraud patterns database...
+2026-01-31 08:45:21.757 | INFO     | app.main:lifespan:72 - Fraud patterns initialized
+2026-01-31 08:46:13.547 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:13.602 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:13.611 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:13.615 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:13.780 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:13.805 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:13.809 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:13.811 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:18.509 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:18.515 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:18.523 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:18.534 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:18.538 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:18.561 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:18.575 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:18.577 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:21.622 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:21.633 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:21.668 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:21.674 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:25.552 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:25.559 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:25.615 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:25.622 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:30.666 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:30.673 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:30.696 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:46:53.454 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:53.454 | INFO     | app.services.scoring_orchestrator:process_transaction:38 - Processing transaction for user 00000000-0000-0000-0000-000000000001
+2026-01-31 08:46:56.846 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:46:56.847 | WARNING  | app.services.scoring_orchestrator:process_transaction:76 - Failed to generate explanation: Explanation service unavailable: All connection attempts failed
+2026-01-31 08:46:56.847 | INFO     | app.services.scoring_orchestrator:process_transaction:95 - Transaction processed: risk_score=52.8, level=medium
+2026-01-31 08:46:56.857 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:10.220 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:10.221 | INFO     | app.services.scoring_orchestrator:process_transaction:38 - Processing transaction for user 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:10.277 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:47:10.278 | WARNING  | app.services.scoring_orchestrator:process_transaction:76 - Failed to generate explanation: Explanation service unavailable: All connection attempts failed
+2026-01-31 08:47:10.278 | INFO     | app.services.scoring_orchestrator:process_transaction:95 - Transaction processed: risk_score=52.8, level=medium
+2026-01-31 08:47:10.287 | WARNING  | app.api.v1.endpoints.predict:predict_fraud:130 - Failed to store transaction after predict: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.UniqueViolationError'>: duplicate key value violates unique constraint "ix_transactions_transaction_id"
+DETAIL:  Key (transaction_id)=(txn_1769849162518) already exists.
+[SQL: INSERT INTO transactions (id, transaction_id, user_id, merchant_id, device_id, amount, currency, location_lat, location_lng, location_country, location_city, transaction_type, category, time_of_day, day_of_week, is_weekend, risk_score, risk_level, is_fraudulent, fraud_type, confidence_score, features, anomaly_score, graph_risk_score, transaction_time, created_at, processed_at) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::FLOAT, $7::VARCHAR, $8::FLOAT, $9::FLOAT, $10::VARCHAR, $11::VARCHAR, $12::VARCHAR, $13::VARCHAR, $14::INTEGER, $15::INTEGER, $16::BOOLEAN, $17::FLOAT, $18::VARCHAR, $19::BOOLEAN, $20::VARCHAR, $21::FLOAT, $22::JSON, $23::FLOAT, $24::FLOAT, $25::TIMESTAMP WITHOUT TIME ZONE, $26::TIMESTAMP WITHOUT TIME ZONE, $27::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: (UUID('8fc3bc04-0dd6-4ad9-9a66-24390c5feb13'), 'txn_1769849162518', UUID('00000000-0000-0000-0000-000000000001'), 'merchant_002', None, 150000000.0, 'USD', None, None, None, None, None, None, None, None, None, 52.8, 'medium', False, None, 0.7, '{"amount": 150000000.0, "amount_log": 18.826145858727198, "currency": 1, "transaction_type": 1, "category": 0, "has_location": 0, "latitude": 0.0, "l ... (1055 characters truncated) ... nt_user_diff": -6955970912.375, "composite_risk": 0.3333333333333333, "high_amount_flag": 0, "very_high_amount_flag": 0, "rapid_transaction_flag": 1}', 0.6, 0.48, datetime.datetime(2026, 1, 31, 8, 47, 10, 278968), datetime.datetime(2026, 1, 31, 8, 47, 10, 280365), datetime.datetime(2026, 1, 31, 8, 47, 10, 278971))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-01-31 08:47:10.288 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:16.077 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:16.078 | INFO     | app.services.scoring_orchestrator:process_transaction:38 - Processing transaction for user 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:16.190 | ERROR    | app.services.explain_client:generate_explanation:58 - Explanation service communication failed: All connection attempts failed
+2026-01-31 08:47:16.191 | WARNING  | app.services.scoring_orchestrator:process_transaction:76 - Failed to generate explanation: Explanation service unavailable: All connection attempts failed
+2026-01-31 08:47:16.191 | INFO     | app.services.scoring_orchestrator:process_transaction:95 - Transaction processed: risk_score=52.8, level=medium
+2026-01-31 08:47:16.196 | WARNING  | app.api.v1.endpoints.predict:predict_fraud:130 - Failed to store transaction after predict: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.UniqueViolationError'>: duplicate key value violates unique constraint "ix_transactions_transaction_id"
+DETAIL:  Key (transaction_id)=(txn_1769849162518) already exists.
+[SQL: INSERT INTO transactions (id, transaction_id, user_id, merchant_id, device_id, amount, currency, location_lat, location_lng, location_country, location_city, transaction_type, category, time_of_day, day_of_week, is_weekend, risk_score, risk_level, is_fraudulent, fraud_type, confidence_score, features, anomaly_score, graph_risk_score, transaction_time, created_at, processed_at) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::FLOAT, $7::VARCHAR, $8::FLOAT, $9::FLOAT, $10::VARCHAR, $11::VARCHAR, $12::VARCHAR, $13::VARCHAR, $14::INTEGER, $15::INTEGER, $16::BOOLEAN, $17::FLOAT, $18::VARCHAR, $19::BOOLEAN, $20::VARCHAR, $21::FLOAT, $22::JSON, $23::FLOAT, $24::FLOAT, $25::TIMESTAMP WITHOUT TIME ZONE, $26::TIMESTAMP WITHOUT TIME ZONE, $27::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: (UUID('53247019-3ae9-4829-92fb-eb3effc05c44'), 'txn_1769849162518', UUID('00000000-0000-0000-0000-000000000001'), 'merchant', None, 150000000.0, 'USD', None, None, None, None, None, None, None, None, None, 52.8, 'medium', False, None, 0.7, '{"amount": 150000000.0, "amount_log": 18.826145858727198, "currency": 1, "transaction_type": 1, "category": 0, "has_location": 0, "latitude": 0.0, "l ... (1054 characters truncated) ... nt_user_diff": -6955970912.375, "composite_risk": 0.3333333333333333, "high_amount_flag": 0, "very_high_amount_flag": 0, "rapid_transaction_flag": 1}', 0.6, 0.48, datetime.datetime(2026, 1, 31, 8, 47, 16, 192253), datetime.datetime(2026, 1, 31, 8, 47, 16, 193756), datetime.datetime(2026, 1, 31, 8, 47, 16, 192255))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-01-31 08:47:16.196 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:18.839 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:18.846 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:18.875 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:18.879 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:20.728 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:20.732 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:20.764 | INFO     | app.core.dependencies:get_current_user:49 - JWT validated successfully for user_id: 00000000-0000-0000-0000-000000000001
+2026-01-31 08:47:20.768 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:23.851 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:23.877 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:23.896 | INFO     | app.utils.logging:log_request:122 - Request processed
+2026-01-31 08:47:42.429 | INFO     | app.main:lifespan:78 - Shutting down FinGuard AI Backend

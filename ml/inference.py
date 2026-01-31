@@ -114,37 +114,66 @@ def _build_feature_vector(transaction_data: Dict[str, Any], features: Dict[str, 
         return np.array([[amount, math.log1p(amount), 0] + [0.0] * 21], dtype=np.float32)[:, :24]
 
 
+def _sigmoid(x: float) -> float:
+    try:
+        return 1.0 / (1.0 + math.exp(-x))
+    except Exception:
+        return 0.0
+
+
 def _anomaly_from_ae(feature_vec, ae, scaler) -> float:
-    """Reconstruction error → 0-1. Higher error = higher anomaly."""
+    """Reconstruction error → 0-1 using log-scaled + sigmoid calibration.
+
+    Uses configurable scaling via environment variables to avoid compressing
+    scores into a narrow band in the common case.
+    """
     import numpy as np
     try:
         X = scaler.transform(feature_vec) if scaler is not None else feature_vec
         pred = ae.predict(X)
         mse = float(np.mean((X - pred) ** 2))
-        # Normalize to 0-1: use 1 - exp(-mse) so 0→0, large→1
-        score = 1.0 - math.exp(-min(mse, 10.0))
-        return max(0.0, min(1.0, score))
+        # Log transform to reduce impact of outliers
+        raw = math.log1p(mse)
+        # Configurable sigmoid parameters
+        k = float(os.getenv("AE_SIGMOID_K", "8.0"))
+        loc = float(os.getenv("AE_SIGMOID_LOC", "0.7"))
+        score = _sigmoid(k * (raw - loc))
+        return float(max(0.0, min(1.0, score)))
     except Exception:
         return 0.0
 
 
 def _anomaly_from_iforest(feature_vec, model, scaler) -> float:
-    """Isolation Forest decision_function → 0-1. More negative = more anomalous."""
+    """Isolation Forest score → 0-1. More anomalous → probability near 1.
+
+    Prefer using score_samples (if available) or decision_function. We invert
+    scores so larger positive values indicate more anomalous, then apply a
+    sigmoid with configurable steepness to expand the dynamic range.
+    """
     import numpy as np
     try:
         X = scaler.transform(feature_vec) if scaler is not None else feature_vec
-        score = model.decision_function(X)
-        score = float(score[0]) if hasattr(score, "__len__") else float(score)
-        # decision_function: negative = anomaly. Map to 0-1: 1 / (1 + exp(score))
-        # When score very negative, exp(score)~0 → prob~1. When score positive, prob~0.
-        prob = 1.0 / (1.0 + math.exp(score))
-        return max(0.0, min(1.0, prob))
+        # Prefer score_samples if available (sklearn semantics: lower -> anomaly)
+        if hasattr(model, "score_samples"):
+            raw_score = model.score_samples(X)
+            raw = float(raw_score[0]) if hasattr(raw_score, "__len__") else float(raw_score)
+            # invert so anomalies are positive: inverted = -raw
+            inverted = -raw
+        else:
+            df = model.decision_function(X)
+            raw = float(df[0]) if hasattr(df, "__len__") else float(df)
+            inverted = -raw
+        # Configurable sigmoid parameters
+        k = float(os.getenv("IF_SIGMOID_K", "8.0"))
+        loc = float(os.getenv("IF_SIGMOID_LOC", "0.0"))
+        prob = _sigmoid(k * (inverted - loc))
+        return float(max(0.0, min(1.0, prob)))
     except Exception:
         return 0.0
 
 
 def _risk_from_gnn(feature_vec, gnn, expected_dim: Optional[int] = None) -> float:
-    """GNN forward on single-node graph → already sigmoid 0-1."""
+    """GNN forward on single-node graph → probability 0-1 with optional sharpening."""
     try:
         import torch
         import numpy as np
@@ -159,7 +188,12 @@ def _risk_from_gnn(feature_vec, gnn, expected_dim: Optional[int] = None) -> floa
         edge_index = torch.zeros((2, 0), dtype=torch.long)
         with torch.no_grad():
             out = gnn(x, edge_index)
-        return float(out.squeeze().item())
+        p = float(out.squeeze().item())
+        # Optional sharpening: gamma>1 pushes probabilities towards 0/1
+        gamma = float(os.getenv("GNN_GAMMA", "1.0"))
+        if gamma != 1.0:
+            p = (p ** gamma) / ((p ** gamma) + ((1.0 - p) ** gamma)) if 0.0 < p < 1.0 else p
+        return float(max(0.0, min(1.0, p)))
     except Exception:
         return 0.0
 
@@ -224,10 +258,15 @@ def predict(
         iforest_score = max(0.0, min(1.0, iforest_score))
     graph_risk_score = max(0.0, min(1.0, graph_risk_score))
 
+    # Combined fraud score 0-100 per spec
+    combined_raw = 0.4 * anomaly_score + 0.6 * graph_risk_score
+    fraud_score = max(0.0, min(100.0, combined_raw * 100.0))
+
+    # Risk level thresholds (aligned with backend defaults)
     risk_level = "low"
-    if (0.4 * anomaly_score + 0.6 * graph_risk_score) >= 0.75:
+    if fraud_score >= 75.0:
         risk_level = "high"
-    elif (0.4 * anomaly_score + 0.6 * graph_risk_score) >= 0.5:
+    elif fraud_score >= 50.0:
         risk_level = "medium"
 
     features_used = list(features.keys())[:20] if features else []
@@ -235,6 +274,7 @@ def predict(
         "anomaly_score": round(anomaly_score, 4),
         "iforest_score": round(iforest_score, 4),
         "graph_risk_score": round(graph_risk_score, 4),
+        "fraud_score": round(fraud_score, 2),
         "risk_level": risk_level,
         "model_confidence": 0.7,
         "features_used": features_used,

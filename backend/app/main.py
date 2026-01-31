@@ -125,16 +125,43 @@ app.include_router(api_router, prefix="/api/v1")
 async def health_check():
     """
     Health check for load balancers and monitoring.
-    Returns status and database state. Does not crash if DB is unreachable.
+    Returns status and database state and ML/explain service state.
+    Does not crash if external services are unreachable.
     """
     db_status = "down"
+    ml_status = "unknown"
+    explain_status = "unknown"
     try:
         async with engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
         db_status = "up"
     except Exception:
         pass
-    return {"status": "ok", "database": db_status}
+
+    # Check ML and explain services (best-effort, short timeout)
+    try:
+        import httpx
+        async with httpx.AsyncClient(timeout=1.0) as client:
+            try:
+                r = await client.get(f"{settings.ML_SERVICE_URL}/health")
+                ml_status = "up" if r.status_code == 200 else "down"
+            except Exception:
+                ml_status = "down"
+            try:
+                r = await client.get(f"{settings.EXPLAIN_SERVICE_URL}/health")
+                explain_status = "up" if r.status_code == 200 else "down"
+            except Exception:
+                explain_status = "down"
+    except Exception:
+        ml_status = "unknown"
+        explain_status = "unknown"
+
+    return {
+        "status": "ok",
+        "database": db_status,
+        "ml_service": ml_status,
+        "explain_service": explain_status,
+    }
 
 
 @app.get("/", tags=["Root"])
